@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import "./App.css";
 import { Todos } from "./components/Todos";
 import { Todo } from "./models/Todo";
+import { AddTodoInput } from "./components/AddTodoInput";
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([
@@ -21,11 +22,23 @@ function App() {
     );
   };
 
-  console.log(todos);
+  const removeTodo = (text: string): void => {
+    setTodos(
+      todos.filter((todosFilter) => {
+        return todosFilter.text != text;
+      })
+    );
+  };
+
+  const addTodo = (e: ChangeEvent<HTMLInputElement>) => {
+    const propertyName = e.target.name;
+    setTodos([...todos, new Todo(propertyName, false)]);
+  };
 
   return (
     <>
-      <Todos todos={todos} toggleTodo={toggleTodo} />
+      <AddTodoInput todo={todo} addTodo={addTodo} />
+      <Todos todos={todos} toggleTodo={toggleTodo} removeTodo={removeTodo} />
     </>
   );
 }
