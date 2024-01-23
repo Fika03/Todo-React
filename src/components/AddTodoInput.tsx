@@ -6,11 +6,17 @@ interface IAddTodoInputProps {
 }
 
 export const AddTodoInput = (props: IAddTodoInputProps) => {
-  const [newTodo, setNewTodo] = useState(new Todo("", false));
+  const [newTodo, setNewTodo] = useState<Todo>(new Todo("", false));
 
   const handleAddClick = (e: FormEvent) => {
     e.preventDefault();
+    if (newTodo.text === "") {
+      return;
+    }
+
     props.addTodo(newTodo);
+
+    setNewTodo({ text: "", done: false });
   };
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const propertyName = e.target.value;
