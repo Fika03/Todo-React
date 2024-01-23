@@ -1,22 +1,30 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { Todo } from "../models/Todo";
 
 interface IAddTodoInputProps {
-  todo: Todo;
-  addTodo: (e: ChangeEvent<HTMLInputElement>) => void;
+  addTodo: (text: Todo) => void;
 }
 
 export const AddTodoInput = (props: IAddTodoInputProps) => {
-  const handleAddClick = () => {};
-  const handleChange = (e: ChangeEvent) => {};
+  const [newTodo, setNewTodo] = useState(new Todo("", false));
+
+  const handleAddClick = (e: FormEvent) => {
+    e.preventDefault();
+    props.addTodo(newTodo);
+  };
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const propertyName = e.target.value;
+
+    setNewTodo({ ...newTodo, text: propertyName });
+  };
 
   return (
     <>
-      <form action="submit" onSubmit={handleAddClick}>
+      <form onSubmit={handleAddClick}>
         <input
           name="text"
           onChange={handleChange}
-          value={props.todo.text}
+          value={newTodo.text}
           type="text"
         />
         <button>Lägg till</button>

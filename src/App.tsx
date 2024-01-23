@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 import { Todos } from "./components/Todos";
 import { Todo } from "./models/Todo";
@@ -30,14 +30,13 @@ function App() {
     );
   };
 
-  const addTodo = (e: ChangeEvent<HTMLInputElement>) => {
-    const propertyName = e.target.name;
-    setTodos([...todos, new Todo(propertyName, false)]);
+  const addTodo = (propertyName: Todo) => {
+    setTodos([...todos, propertyName]);
   };
 
   return (
     <>
-      <AddTodoInput todo={todo} addTodo={addTodo} />
+      <AddTodoInput addTodo={addTodo} />
       <Todos todos={todos} toggleTodo={toggleTodo} removeTodo={removeTodo} />
     </>
   );
